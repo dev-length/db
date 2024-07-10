@@ -2,17 +2,20 @@ use sqldb;
 
 select userID as '사용자 아이디', sum(amount) as '총 구매 개수' from buytbl group by userID;
 
-select userID as '사용자 아이디', sum(price) as '총 구매액' from buytbl group by userID;
+select userID as '사용자 아이디', sum(price*amount) as '총 구매액' from buytbl group by userID;
 
 select avg(amount) '평균 구매 개수' from buytbl;
 
 select userID, avg(amount) '평균 구매 개수' from buytbl group by userID;
 
 SELECT name, height FROM usertbl where name in((SELECT name FROM usertbl ORDER BY height ASC LIMIT 1),(SELECT name FROM usertbl ORDER BY height DESC LIMIT 1));
+SELECT name, height FROM usertbl where height = (SELECT max(height) FROM usertbl) or height = (SELECT min(height) FROM usertbl);
 
 select count(mobile1) from usertbl where mobile1 is not null;
 
-select userID as '사용자 아이디', sum(price) as '총 구매액' from buytbl group by userID having sum(price) >= 1000;
+select userID as '사용자 아이디', sum(price*amount) as '총 구매액' from buytbl group by userID having sum(price*amount) >= 1000;
+
+select * from buytbl;
 
 use world;
 
@@ -36,6 +39,8 @@ LIMIT 1;
 
 SELECT name, LENGTH(name) AS '글자수'
 FROM country;
+
+select upper(mid(name,1,3)) as '앞세글자만 대문자' from country;
 
 SELECT CONCAT(UCASE(SUBSTRING(name, 1, 3)), SUBSTRING(name, 4)) AS '앞세글자_대문자_나머지'
 FROM country;
